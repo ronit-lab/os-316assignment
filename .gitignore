@@ -50,8 +50,9 @@ void *threading(void *az){
     printf("released PID  is assign to new thread/Process  (%d)\n");
     pthread_exit(NULL);
     
-}
-/**void process_creation()
+} 
+/**void process_creation()    /****** instead of using bitmap we can also use fork() system call to create process which will create process on the basis of formula 2^n/****
+
 {   int NO_OF_Processes;
 	for(int i=0;i<NO_OF_Processes;i++)
 	{   int id;
