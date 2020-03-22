@@ -1,52 +1,83 @@
-# Prerequisites
-*.d
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<unistd.h>
+#include<pthread.h>
+#include<sys/types.h>
+#define MIN_PID 100
+#define MAX_PID 1000
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
 
-# Linker output
-*.ilk
-*.map
-*.exp
 
-# Precompiled Headers
-*.gch
-*.pch
+int bit_map[MAX_PID-MIN_PID]={0};
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+int allocate_pid(void){
+    int i,flag=1;
+    for(i=0; i<MAX_PID-MIN_PID; i++){
+        if(bit_map[i]==0){
+           
+            bit_map[i]=1;
+            flag=0;
+            break;
+        }
+    }
+    return flag?-1:i;
+}
+void release_pid(int id){
+    bit_map[id]=0;
+}
+void *threading(void *az){
+    int tid =  *(( int* )az);
+    
+    
+    int id = allocate_pid();
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+    if(id==-1){
+        printf("No PID available.");
+    }
+    else{
+        printf("Thread/Process  %d is allocated with PID %d \n",tid,id+MIN_PID);
+        
+        
+        
+        sleep(10);
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+        printf("Thread/Process (%d) PID (%3d) Released after %d sec\n",tid,id+MIN_PID,10);
+        release_pid(id);
+       
+    }
+    printf("released PID  is assign to new thread/Process  (%d)\n");
+    pthread_exit(NULL);
+    
+}
+/**void process_creation()
+{   int NO_OF_Processes;
+	for(int i=0;i<NO_OF_Processes;i++)
+	{   int id;
+		id=fork()
+		printf("process with id is= %3d",id+MIN_PID);
+	}
+}****/
+int main(){
+	printf(">>>>>>>>>>>>>>>>>>>>>>WELCOME TO PID MANAGER>>>>>>>>>>>>>>\n");
+	allocate_pid();
+//	process_creation()
+	
+    int i;
+    int NO_OF_Processes;
+    printf("enter the no of processes/threads \n");
+    scanf("%d",&NO_OF_Processes);
+    
+    pthread_t process[NO_OF_Processes];
+    srand(time(NULL));
+    for(i=0; i<NO_OF_Processes; i++){
+        if(pthread_create(&process[i],NULL,threading,(void*)&i))
+            return -1*printf("Error in thread %d !!!\n",i);
+    }
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+    for(i=0; i<NO_OF_Processes; i++)
+        pthread_join(process[i],NULL);
+    
+    return 0*printf("\n************SUCCESSFUL EXIT*************\n");
+}
