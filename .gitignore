@@ -51,7 +51,7 @@ void *threading(void *az){
     pthread_exit(NULL);
     
 } 
-/**void process_creation()    /****** instead of using bitmap we can also use fork() system call to create process which will create process on the basis of formula 2^n/****
+/**void process_creation()    
 
 {   int NO_OF_Processes;
 	for(int i=0;i<NO_OF_Processes;i++)
@@ -59,7 +59,7 @@ void *threading(void *az){
 		id=fork()
 		printf("process with id is= %3d",id+MIN_PID);
 	}
-}****/
+}***/
 int main(){
 	printf(">>>>>>>>>>>>>>>>>>>>>>WELCOME TO PID MANAGER>>>>>>>>>>>>>>\n");
 	allocate_pid();
