@@ -69,6 +69,21 @@ int main(){
 	printf(">>>>>>>>>>>>>>>>>>>>>>WELCOME TO PID MANAGER>>>>>>>>>>>>>>\n");
 	allocate_pid();
 //	process_creation()
+      int num;
+    printf("<<<<<<<<<<<<<<<<<<<<<<<ENTER YOUR CHOICE>>>>>>>>>>>>>>>>>>>>\n");
+    printf("1) FOR PROCESS CREATION \n");
+    printf("2) FOR THREAD  CREATION \n");
+    
+    scanf("%d",&num);
+    switch(num)
+    {
+    	case 1:
+    		printf("<<ITS PROCESS CREATION SECTION\n");
+    		break;
+    	case 2:
+    		printf("<<ITS THREAD CREATION SECTION \n");
+    		break;
+	}
 	
     int i;
     int NO_OF_Processes;
