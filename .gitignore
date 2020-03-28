@@ -22,7 +22,7 @@ int allocate_pid(void){
         if(bit_map[i]==0){
            
             bit_map[i]=1;
-	        printf("ALLOCATED MEMORY SUCESSFULLY\n");
+	        
             flag=0;
             break;
         }
@@ -43,17 +43,41 @@ void *threading(void *az){
         printf("No PID available.");
     }
     else{
-        printf("Thread/Process  %d is allocated with PID %d \n",tid,id+MIN_PID);
+        printf("Thread  %d is allocated with PID %d \n",tid,id+MIN_PID);
         
         
         
         sleep(10);
 
-        printf("Thread/Process (%d) PID (%3d) Released after %d sec\n",tid,id+MIN_PID,10);
+        printf("Thread (%d) PID (%3d) Released after %d sec\n",tid,id+MIN_PID,10);
         release_pid(id);
        
     }
-    printf("released PID  is assign to new thread/Process  (%d)\n");
+    printf("released PID  is assign to new thread  (%d)\n");
+    pthread_exit(NULL);
+    
+} 
+void *processin(void *az){
+    int tid =  *(( int* )az);
+    
+    
+    int id = allocate_pid();
+
+
+    if(id==-1){
+        printf("No PID available.");
+    }
+    else{
+        printf("Process  %d is allocated with PID %d \n",tid,id+MIN_PID);
+    
+        
+        sleep(10);
+
+        printf("Process (%d) PID (%3d) Released after %d sec\n",tid,id+MIN_PID,10);
+        release_pid(id);
+       
+    }
+    printf("released PID  is assign to new Process  (%d)\n");
     pthread_exit(NULL);
     
 } 
@@ -72,19 +96,41 @@ int main(){
     {
     	case 1:
     		printf("<<ITS PROCESS CREATION SECTION\n");
+		int a;
+    		 int tid;
+    		 int id;
+              int NO_OF_Processes;
+              printf("enter the no of processes \n");
+              scanf("%d",&NO_OF_Processes);
+              for(int i=0;i<NO_OF_Processes;i++)
+              {
+			  pthread_t process[NO_OF_Processes];
+  
+           for(i=0; i<NO_OF_Processes; i++){
+        if(pthread_create(&process[i],NULL,processin,(void*)&i))
+            return -1*printf("Error in process %d !!!\n",i);
+    }
+
+    for(i=0; i<NO_OF_Processes; i++)
+        pthread_join(process[i],NULL);
+              
+          }
     		break;
+    		
+		
+    		
     	case 2:
-    		printf("<<ITS THREAD CREATION SECTION \n");
+    		printf("<<ITS THREAD CREATION SECTION MAIN TESTCASE PRESS 100 \n");
     		
 	
-    int i;
-    int NO_OF_Processes;
-    printf("enter the no of processes/threads \n");
-    scanf("%d",&NO_OF_Processes);
+   int i;
+    int NO_OF_THREADS;
+    printf("enter the no of threads \n");
+    scanf("%d",&NO_OF_THREADS);
     
-    pthread_t process[NO_OF_Processes];
-    srand(time(NULL));
-    for(i=0; i<NO_OF_Processes; i++){
+    pthread_t process[NO_OF_THREADS];
+  
+    for(i=0; i<NO_OF_THREADS; i++){
         if(pthread_create(&process[i],NULL,threading,(void*)&i))
             return -1*printf("Error in thread %d !!!\n",i);
     }
@@ -92,7 +138,9 @@ int main(){
     for(i=0; i<NO_OF_Processes; i++)
         pthread_join(process[i],NULL);
     
-    return 0*printf("\n************SUCCESSFUL EXIT*************\n");
+    return 0*printf("\n************PID DONE ITS WORK*************\n");
     break;
+    
+
 }
 }
