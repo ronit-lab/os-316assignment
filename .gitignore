@@ -56,19 +56,11 @@ void *threading(void *az){
     pthread_exit(NULL);
     
 } 
-/**void process_creation()    
 
-{   int NO_OF_Processes;            // fork () system call can be also used to cerate process uncomment thos line to crete process using fork system call() //
-	for(int i=0;i<NO_OF_Processes;i++)
-	{   int id;
-		id=fork()
-		printf("process with id is= %3d",id+MIN_PID);
-	}
-}***/
 int main(){
 	printf(">>>>>>>>>>>>>>>>>>>>>>WELCOME TO PID MANAGER>>>>>>>>>>>>>>\n");
 	allocate_pid();
-//	process_creation()
+
       int num;
     printf("<<<<<<<<<<<<<<<<<<<<<<<ENTER YOUR CHOICE>>>>>>>>>>>>>>>>>>>>\n");
     printf("1) FOR PROCESS CREATION \n");
