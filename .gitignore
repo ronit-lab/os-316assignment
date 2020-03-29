@@ -50,10 +50,11 @@ void *threading(void *az){
         sleep(10);
 
         printf("Thread (%d) PID (%3d) Released after %d sec\n",tid,id+MIN_PID,10);
+	
         release_pid(id);
        
     }
-    
+      printf("released PID is assign to new thread %d\n");
     pthread_exit(NULL);
     
 } 
@@ -77,6 +78,7 @@ void *processin(void *az){
         release_pid(id);
        
     }
+      printf("released PID is assign to new process %d\n");
     
     pthread_exit(NULL);
     
@@ -108,7 +110,7 @@ int main(){
   
            for(i=0; i<NO_OF_Processes; i++){
         if(pthread_create(&process[i],NULL,processin,(void*)&i))
-            return -1*printf("Error in process %d !!!\n",i);
+            return -1*printf("Error in process %d creation !!!\n",i);
     }
 
     for(i=0; i<NO_OF_Processes; i++)
@@ -132,7 +134,7 @@ int main(){
   
     for(i=0; i<NO_OF_THREADS; i++){
         if(pthread_create(&process[i],NULL,threading,(void*)&i))
-            return -1*printf("Error in thread %d !!!\n",i);
+            return -1*printf("Error in thread %d creation !!!\n",i);
     }
 
     for(i=0; i<NO_OF_Processes; i++)
