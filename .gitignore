@@ -53,7 +53,7 @@ void *threading(void *az){
         release_pid(id);
        
     }
-    printf("released PID  is assign to new thread  (%d)\n");
+    
     pthread_exit(NULL);
     
 } 
@@ -77,7 +77,7 @@ void *processin(void *az){
         release_pid(id);
        
     }
-    printf("released PID  is assign to new Process  (%d)\n");
+    
     pthread_exit(NULL);
     
 } 
